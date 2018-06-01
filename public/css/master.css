@@ -1,0 +1,66 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #f4f4f4;
+}
+
+img {
+	width: 100%;
+}
+
+a {
+	color: #03658c;
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.navbar {
+	background-color: #fff;
+}
+
+#livesearch {
+	position: absolute;
+	top: 60px;
+	width: 400px;
+}
+
+.liveSearchResult {
+	position: relative;
+}
+
+.main {
+	margin-top: 3rem;
+}
+
+.profile-image {
+	width: 30px;
+	margin-right: 5px;
+}
+
+@media(min-width:992px) {
+	#searchInput {
+		width: 400px;
+	}
+}
+
+.item-add-love {
+	background: none;
+	color: inherit;
+	border: none;
+	outline: inherit;
+}
+
+.img-fluid {
+	max-height: 130px;
+}
+
+.btn {
+	font-size: 13px;
+}

@@ -1,0 +1,79 @@
+a {
+    text-decoration: none;
+}
+
+.card-deck-wraper {
+    margin: 5em 0 0 0;
+}
+
+@media(min-width:992px) {
+    #searchInput {
+        width: 400px;
+    }
+}
+
+.item-address {
+    font-size: 13px;
+    display: inline-block;
+    width: 9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-creator-name {
+    font-size: 13px;
+    display: inline-block;
+    width: 9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+    margin-bottom: -5px;
+}
+
+.item-creator-avatar {
+    width: 25px;
+}
+
+.item-name {
+    display: block;
+}
+
+.catagory-show {
+    margin: 10px 10px 0 0;
+}
+
+.card:not(:last-child) {
+    margin-right: 2px
+}
+
+.card-img-top:hover .item-add-love {
+    opacity: 1;
+}
+
+.item-add-love {
+    position: absolute;
+    top: 10px;
+    right: 10%;
+    opacity: 0;
+}
+
+.item-add-love i {
+    color: red;
+}
+
+.img-fluid {
+    height: 130px;
+}
+
+a.float-right.category-show {
+    margin-top: 10px;
+}
+
+h3 {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left top;
+    padding-left: 4%;
+}

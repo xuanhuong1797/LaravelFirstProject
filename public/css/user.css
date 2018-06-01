@@ -1,0 +1,13 @@
+.product-status {
+    position: absolute;
+    bottom: 0%;
+    right: 15%;
+}
+
+.fa-check-circle {
+    color: blue;
+}
+
+.fa-times-circle {
+    color: red;
+}
