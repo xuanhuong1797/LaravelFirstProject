@@ -17,8 +17,7 @@
                         aria-expanded="false">Danh mục</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @foreach ($categories as $category)
-                            <a class="dropdown-item" href="{{ route('category.show',[$category->slug]) }}">{{ $category->name }}</a>
-                        @endforeach
+                        <a class="dropdown-item" href="{{ route('category.show',[$category->slug]) }}">{{ $category->name }}</a>                        @endforeach
                     </div>
                 </li>
             </ul>
@@ -31,35 +30,33 @@
         <div class="collapse navbar-collapse" id="account">
             <ul class="navbar-nav ml-auto">
                 @guest
-                    <li>
-                        <a class="btn btn-primary" href="{{ route('login') }}">Đăng nhập</a>
-                    </li>
-                    @else
-                    @include('includes.notification')
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" v-pre>
+                <li>
+                    <a class="btn btn-primary" href="{{ route('login') }}">Đăng nhập</a>
+                </li>
+                @else
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" v-pre>
                             <img src="{{ URL::to('/') }}/{{ Auth::user()->avatar_url }}" alt="Profile Avatar" class="profile-image rounded-circle "> {{ Auth::user()->name }}
                             <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a href="{{ URL::to('/') }}/user/{{ Auth::user()->username }}" class="dropdown-item">Thông tin tài khoản</a>
-                            <a href="{{ URL::to('/') }}/product/create" class="dropdown-item">Đăng sản phẩm</a>
-                            <a href="{{ URL::to('/') }}/changepassword" class="dropdown-item">Đổi mật khẩu</a>
-                            @if (Auth::user()->can('view admin'))
-                                <a href="{{ route('admin.index') }}" class="dropdown-item">Trang quản lý</a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="{{ URL::to('/') }}/user/{{ Auth::user()->username }}" class="dropdown-item">Thông tin tài khoản</a>
+                        <a href="{{ URL::to('/') }}/product/create" class="dropdown-item">Đăng sản phẩm</a>
+                        <a href="{{ URL::to('/') }}/changepassword" class="dropdown-item">Đổi mật khẩu</a> @if (Auth::user()->can('view
+                        admin'))
+                        <a href="{{ route('admin.index') }}" class="dropdown-item">Trang quản lý</a> @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
 
                 @endguest
             </ul>
@@ -122,4 +119,5 @@
             }
         })
     })
+
 </script>

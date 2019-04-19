@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('style')
     <link href="{{ asset('css/product.css') }}" rel="stylesheet">
 @endsection
@@ -33,11 +33,6 @@
             <div class="creator-container">
                 <img src="{{ URL::to('/') }}/{{ $user->avatar_url }}" alt="">
                 <a class="creator-name" href="{{ URL::to('/') }}/user/{{ $user->username }} ">{{ $user->name }}</a>
-                @if (Auth::check())
-                    @if (Auth::user()->id != $product->user_id)
-                        <button>Follow</button>
-                    @endif
-                @endif
             </div>
             <div class="description-container">
                 <p>{{ $product->description }}</p>
