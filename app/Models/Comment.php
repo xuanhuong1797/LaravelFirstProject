@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,14 +20,17 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
+
     public function rating()
     {
         return $this->hasOne(Rating::class);
     }
+
     public function scopeFindProduct($query, $idProduct)
     {
         return $query->where('product_id', $idProduct);
     }
+
     public function scopeFindByUser($query, $idUser)
     {
         return $query->where('user_id', $idUser);

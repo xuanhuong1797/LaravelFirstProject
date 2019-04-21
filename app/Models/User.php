@@ -1,11 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\URL;
 
 class User extends Authenticatable
 {
@@ -22,23 +21,8 @@ class User extends Authenticatable
         'email',
         'password',
         'gender',
-        'username'
+        'username',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($model) {
-            if ($model->gender == 0) {
-                $model->avatar_url =  'images/avatar/default-avatar-male.jpeg';
-            } else {
-                $model->avatar_url =  'images/avatar/default-avatar-female.jpeg';
-            }
-            $model->assignRole('user');
-            $model->save();
-        });
-    }
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,8 +30,24 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','updated_at'
+        'password',
+        'remember_token',
+        'updated_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($model) {
+            if ($model->gender == 0) {
+                $model->avatar_url = 'images/avatar/default-avatar-male.jpeg';
+            } else {
+                $model->avatar_url = 'images/avatar/default-avatar-female.jpeg';
+            }
+            $model->assignRole('user');
+            $model->save();
+        });
+    }
 
     public function products()
     {

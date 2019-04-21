@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Request as Res;
-use App\Comment;
-use App\Product;
 use Illuminate\Support\Facades\Auth;
-use App\Rating;
+use App\Models\Comment;
+use App\Models\Product;
+use App\Models\Rating;
 
 class CommentController extends Controller
 {
@@ -25,13 +24,13 @@ class CommentController extends Controller
         $comment->product_id = $product->id;
         $arrayFirst = array_first($request->data);
         //Check if request has comment
-        if ($arrayFirst['name']== "commentBody") {
+        if ($arrayFirst['name'] == 'commentBody') {
             $comment->body = $arrayFirst['value'];
         }
         $comment->save();
         //Check if have star ranking
         $arrayLast = array_last($request->data);
-        if ($arrayLast['name'] == "rating") {
+        if ($arrayLast['name'] == 'rating') {
             $rating = new Rating();
             $rating->user_id = $user->id;
             $rating->product_id = $product->id;
@@ -49,7 +48,7 @@ class CommentController extends Controller
     public function update(Request $request)
     {
         $comment = Comment::find($request->id);
-        $commentData =array_first($request->data);
+        $commentData = array_first($request->data);
         $rating = Rating::where('comment_id', $comment->id)->first();
         if ($rating) {
             $ratingData = array_last($request->data);
@@ -58,6 +57,7 @@ class CommentController extends Controller
         }
         $comment->body = $commentData['value'];
         $comment->save();
+
         return $comment;
     }
 
@@ -69,11 +69,11 @@ class CommentController extends Controller
         $comment->product_id = $product->id;
         $comment->parent_id = $request->idComment;
         $commentData = array_first($request->data);
-        if ($commentData['name']== "commentBody") {
+        if ($commentData['name'] == 'commentBody') {
             $comment->body = $commentData['value'];
         }
         $comment->save();
+
         return $comment;
-        //$comment->save();
     }
 }

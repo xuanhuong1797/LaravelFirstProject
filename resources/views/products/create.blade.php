@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('style')
 
 @endsection
@@ -27,7 +27,7 @@
                     @endif
                     {!! Form::open(['url' => 'product/store','files' => true]) !!} {{ Form::token() }} {{ Form::bsText('name') }}
                     {{ Form::bsTextArea('address') }} {{ Form::bsTextArea('description') }}
-                    {{ Form::bsNumber('price') }} {{ Form::bsSelect('category_id',App\Category::pluck('name','id'),null,['placeholder'=>'Pick your catagory']) }}
+                    {{ Form::bsNumber('price') }} {{ Form::bsSelect('category_id',App\Models\Category::pluck('name','id'),null,['placeholder'=>'Pick your catagory']) }}
                     {{ Form::bsFile('images[]') }} {{ Form::bsSubmit('Submit') }}
                     {!! Form::close() !!}
                 </div>

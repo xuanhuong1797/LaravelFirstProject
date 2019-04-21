@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Product;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -43,9 +43,10 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $imagePath = $request->image->store('categories', 'uploads');
-        $url =  $imagePath;
+        $url = $imagePath;
         $category->image_url = $url;
         $category->save();
+
         return redirect()->route('admin.category')->with('messenger', 'Create Category Successed!!!');
     }
 
@@ -58,10 +59,11 @@ class CategoryController extends Controller
     public function show($slug)
     {
         $category = Category::where('slug', $slug)->first();
-        if ($category== null) {
+        if ($category == null) {
             abort(404, 'Page not found');
         }
         $products = Product::published()->where('category_id', $category->id)->inRandomOrder()->paginate(10);
+
         return view('category', compact(['products']));
     }
 
@@ -74,6 +76,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+
         return view('admins.category.edit', compact(['category']));
     }
 
@@ -94,10 +97,11 @@ class CategoryController extends Controller
         $category->name = $request->name;
         if ($request->image) {
             $imagePath = $request->image->store('categories', 'uploads');
-            $url = '/'. $imagePath;
+            $url = '/' . $imagePath;
             $category->image_url = $url;
         }
         $category->save();
+
         return redirect()->route('admin.category')->with('messenger', 'Edit Category Successed!!!');
     }
 

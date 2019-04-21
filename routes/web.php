@@ -1,9 +1,5 @@
 <?php
 
-use function foo\func;
-use App\Category;
-use App\Product;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +10,6 @@ use App\Product;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 Auth::routes();
 
@@ -52,7 +47,7 @@ Route::prefix('user')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
     Route::get('user', 'AdminController@viewUser')->name('admin.user');
-    
+
     Route::prefix('category')->group(function () {
         Route::get('create', 'CategoryController@create')->name('category.create');
         Route::get('edit/{id}', 'CategoryController@edit')->name('category.edit');

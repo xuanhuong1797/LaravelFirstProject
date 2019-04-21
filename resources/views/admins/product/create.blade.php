@@ -1,4 +1,4 @@
-@extends('layouts.admin') 
+@extends('layouts.admin')
 @section('style')
 
 @endsection
@@ -22,8 +22,8 @@
                     @endif
                     {!! Form::open(['url' => 'admin/product/store','files' => true]) !!} {{ Form::token() }} {{ Form::bsText('name') }}
                     {{ Form::bsTextArea('address') }} {{ Form::bsTextArea('description') }}
-                    {{ Form::bsNumber('price') }} {{ Form::bsSelect('category_id',App\Category::pluck('name','id'),null,['placeholder'=>'Pick your catagory']) }}
-                    {{ Form::bsSelect('user_id',App\User::pluck('name','id'),null,['placeholder'=>'Pick product creator']) }}
+                    {{ Form::bsNumber('price') }} {{ Form::bsSelect('category_id',App\Models\Category::pluck('name','id'),null,['placeholder'=>'Pick your catagory']) }}
+                    {{ Form::bsSelect('user_id',App\Models\User::pluck('name','id'),null,['placeholder'=>'Pick product creator']) }}
                     {{ Form::bsFile('images[]') }} {{ Form::bsSubmit('Submit') }}
                     {!! Form::close() !!}
 
