@@ -51,8 +51,20 @@ class Product extends Model
         return $this->hasMany(Comment::class, 'product_id', 'id');
     }
 
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }
+
+    public function getAddressAttribute()
+    {
+        $address = $this->address()->first();
+
+        return "{$address->address} ";
     }
 }
