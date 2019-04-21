@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Comment;
-use App\Rating;
+use App\Models\Comment;
+use App\Models\Rating;
 
 class CommentsSeeder extends Seeder
 {
@@ -15,8 +15,8 @@ class CommentsSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i = 1; $i<= 120; $i ++) {
-            for ($j = 1;$j <= 5; $j ++) {
+        for ($i = 1; $i <= 120; $i++) {
+            for ($j = 1; $j <= 5; $j++) {
                 $comment = new Comment();
                 $rating = new Rating();
                 $comment->user_id = $faker->numberBetween(1, 10);

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\ImageProduct;
+use App\Models\ImageProduct;
 
 class ImagesProductSeeder extends Seeder
 {

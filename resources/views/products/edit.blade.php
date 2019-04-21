@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('style')
 
 @endsection
@@ -29,7 +29,7 @@
                     {{ method_field('PUT') }} {{ Form::bsText('name',$product->name,['']) }}
                     {{ Form::bsTextArea('address',$product->address,['']) }}
                     {{ Form::bsTextArea('description',$product->description,['']) }}
-                    {{ Form::bsNumber('price',$product->price) }} {{ Form::bsSelect('category_id',App\Category::pluck('name','id'),$product->category_id) }}
+                    {{ Form::bsNumber('price',$product->price) }} {{ Form::bsSelect('category_id',App\Models\Category::pluck('name','id'),$product->category_id) }}
                     {{ Form::submit('Edit',['class' =>'btn btn-primary']) }}
                     {!! Form::close() !!}
                 </div>

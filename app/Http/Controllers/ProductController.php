@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateProductRequest;
-use App\Product;
-use App\ImageProduct;
-use App\User;
-use App\Category;
-use App\Comment;
-use App\Love;
-use App\Rating;
+use App\Models\Product;
+use App\Models\ImageProduct;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Love;
+use App\Models\Rating;
 use App\Http\Requests\ProductImageRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -55,19 +54,20 @@ class ProductController extends Controller
         $product = Product::create(array_merge($request->except('_token'), ['user_id' => $request->user()->id]));
         foreach ($request->images as $image) {
             $imagePath = $image->store('products', 'uploads');
-            $url =  $imagePath;
+            $url = $imagePath;
             ImageProduct::create([
                 'product_id' => $product->id,
                 'image_url' => $url,
             ]);
         }
+
         return redirect()->route('product.create')->with('messenger', 'Create Product Successful');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -79,7 +79,7 @@ class ProductController extends Controller
         if (!$product->published) {
             if (Auth::check()) {
                 if (!Auth::user()->can('publish products') || !Auth::user()->can('unpublish products')) {
-                    if (Auth::user()->id!= $product->user_id) {
+                    if (Auth::user()->id != $product->user_id) {
                         abort(404, 'Page not found');
                     }
                 }
@@ -96,29 +96,30 @@ class ProductController extends Controller
         $userComment = null;
         if (Auth::check()) {
             //Load other comments
-            $comments = Comment::findProduct($product->id)->where('user_id', '!=', Auth::user()->id)->with(['user','rating'])->latest()->get();
+            $comments = Comment::findProduct($product->id)->where('user_id', '!=', Auth::user()->id)->with(['user', 'rating'])->latest()->get();
             //Load Current user comment
-            $userComment = Comment::findProduct($product->id)->findByUser(Auth::user()->id)->with(['user','rating'])->first();
+            $userComment = Comment::findProduct($product->id)->findByUser(Auth::user()->id)->with(['user', 'rating'])->first();
         } else {
             //Load other comments
             $comments = Comment::findProduct($product->id)->with('user')->latest()->get();
         }
         if (!$userComment) {
-            return view('products.show', compact(['product', 'images', 'user', 'comments','rating']));
+            return view('products.show', compact(['product', 'images', 'user', 'comments', 'rating']));
         } else {
-            return view('products.show', compact(['product', 'images', 'user', 'comments', 'userComment','rating']));
+            return view('products.show', compact(['product', 'images', 'user', 'comments', 'userComment', 'rating']));
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+
         return view('products.edit', compact('product'));
     }
 
@@ -126,23 +127,23 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
-        $input = $request->except(['_token','_method']);
+        $input = $request->except(['_token', '_method']);
         $product->fill($input);
         $product->save();
-        
+
         return redirect(route('home'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Product $product)
@@ -159,12 +160,14 @@ class ProductController extends Controller
             $product->published = true;
         }
         $product->save();
+
         return $product;
     }
+
     public function addLove(Request $request)
     {
         $idProduct = $request->id;
-     
+
         $product = Product::find($idProduct);
         if (!$product) {
             return null;
@@ -174,19 +177,20 @@ class ProductController extends Controller
         if ($love) {
             if ($love->loved) {
                 $love->loved = false;
-                $product->love -=1;
+                $product->love -= 1;
             } else {
                 $love->loved = true;
-                $product->love +=1;
+                $product->love += 1;
             }
         } else {
             $love = new Love();
             $love->user_id = $user->id;
             $love->product_id = $idProduct;
-            $product->love +=1;
+            $product->love += 1;
         }
         $love->save();
         $product->save();
+
         return $product->love;
     }
 
@@ -194,6 +198,7 @@ class ProductController extends Controller
     {
         if ($request->ajax()) {
             $product = Product::published()->where('name', 'LIKE', "{$request->data}%")->get();
+
             return json_encode($product, JSON_UNESCAPED_UNICODE);
         }
     }
@@ -201,6 +206,7 @@ class ProductController extends Controller
     public function adminCreate()
     {
         $users = User::all();
+
         return view('admins.product.create', compact(['users']));
     }
 
@@ -214,6 +220,7 @@ class ProductController extends Controller
                 'product_id' => $product->id,
                 'image_url' => $url,
             ]);
+
             return redirect()->route('admin.product')->with('messenger', 'Create Product Successed!!!');
         }
     }
@@ -221,15 +228,17 @@ class ProductController extends Controller
     public function adminEdit($id)
     {
         $product = Product::findOrFail($id);
+
         return view('admins.product.edit', compact(['product']));
     }
 
     public function adminUpdate(UpdateProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
-        $input = $request->except(['_token','_method']);
+        $input = $request->except(['_token', '_method']);
         $product->fill($input);
         $product->save();
+
         return redirect()->route('admin.product')->with('messenger', 'Edit Product Successed!!!');
     }
 }

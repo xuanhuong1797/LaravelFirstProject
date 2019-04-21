@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Category;
+use App\Models\Category;
 use Faker\Factory as Faker;
 
 class CategorySeeder extends Seeder
@@ -25,7 +25,7 @@ class CategorySeeder extends Seeder
         $category->name = $name;
         $category->image_url = 'categories/'.$faker->numberBetween(1, 4).'.png';
         $category->save();
-        
+
         $category = new Category();
         $name = 'Đồ dùng';
         $category->name = $name;

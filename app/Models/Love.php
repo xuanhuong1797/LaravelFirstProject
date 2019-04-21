@@ -1,14 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Love extends Model
 {
     protected $fillable = [
-        'product_id','user_id','loved'
+        'product_id',
+        'user_id',
+        'loved',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -21,6 +24,6 @@ class Love extends Model
 
     public function scopeLoved($query, $idProduct, $idUser)
     {
-        return $query->where(['product_id' => $idProduct,'user_id' => $idUser]);
+        return $query->where(['product_id' => $idProduct, 'user_id' => $idUser]);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Product;
+use App\Models\Product;
 use Faker\Factory as Faker;
 
 class ProductSeeder extends Seeder
@@ -14,8 +14,8 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        for ($i=0; $i < 30; $i++) {
-            for ($j=1; $j <=4; $j++) {
+        for ($i = 0; $i < 30; $i++) {
+            for ($j = 1; $j <= 4; $j++) {
                 $product = new Product();
                 $product->name = $faker->text(15);
                 $product->address = $faker->address();
