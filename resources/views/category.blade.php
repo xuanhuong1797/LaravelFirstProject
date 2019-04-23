@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('style')
 @endsection
 
@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-2 hidden-sm left-sidebar">
             <ul class="category-sidebar-list">
-                @foreach($categories as $item)
+                @foreach($allCategories as $item)
                     <li>
                         <a href="{{ route('category.show',[$item->slug]) }}">{{ $item->name }}</a>
                     </li>

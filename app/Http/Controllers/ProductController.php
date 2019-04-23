@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Product\CreateRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\ImageProduct;
 use App\Models\User;
-use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Love;
 use App\Models\Rating;
-use App\Http\Requests\ProductImageRequest;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Province;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth'])->except('index', 'show', 'search');
-        $categories = Category::all();
     }
 
     /**
@@ -40,7 +39,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $provincies = Province::pluck('name', 'id');
+        $categories = Category::pluck('name', 'id');
+
+        return view('products.create', compact(['categories', 'provincies']));
     }
 
     /**
@@ -49,9 +51,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductImageRequest $request)
+    public function store(CreateRequest $request)
     {
-        $product = Product::create(array_merge($request->except('_token'), ['user_id' => $request->user()->id]));
+        $product = Product::create(
+            array_merge(
+                $request->all(),
+                [
+                    'user_id' => $request->user()->id,
+                ]
+            )
+        );
+
+        $product->address()->create([
+            'address' => $request->address,
+            'ward_id' => $request->ward_id,
+        ]);
+
         foreach ($request->images as $image) {
             $imagePath = $image->store('products', 'uploads');
             $url = $imagePath;

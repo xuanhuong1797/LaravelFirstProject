@@ -14,10 +14,11 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">Danh mục</a>
+                        aria-expanded="false">Categories</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach ($categories as $category)
-                        <a class="dropdown-item" href="{{ route('category.show',[$category->slug]) }}">{{ $category->name }}</a>                        @endforeach
+                        @foreach ($allCategories as $category)
+                        <a class="dropdown-item" href="{{ route('category.show',[$category->slug]) }}">{{ $category->name }}</a>
+                        @endforeach
                     </div>
                 </li>
             </ul>
@@ -31,7 +32,7 @@
             <ul class="navbar-nav ml-auto">
                 @guest
                 <li>
-                    <a class="btn btn-primary" href="{{ route('login') }}">Đăng nhập</a>
+                    <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
                 </li>
                 @else
                 <li class="nav-item dropdown">
@@ -42,11 +43,11 @@
                         </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a href="{{ URL::to('/') }}/user/{{ Auth::user()->username }}" class="dropdown-item">Thông tin tài khoản</a>
-                        <a href="{{ URL::to('/') }}/product/create" class="dropdown-item">Đăng sản phẩm</a>
-                        <a href="{{ URL::to('/') }}/changepassword" class="dropdown-item">Đổi mật khẩu</a> @if (Auth::user()->can('view
+                        <a href="{{ URL::to('/') }}/user/{{ Auth::user()->username }}" class="dropdown-item">My Profile</a>
+                        <a href="{{ URL::to('/') }}/product/create" class="dropdown-item">Upload your product</a>
+                        <a href="{{ URL::to('/') }}/changepassword" class="dropdown-item">Change password</a> @if (Auth::user()->can('view
                         admin'))
-                        <a href="{{ route('admin.index') }}" class="dropdown-item">Trang quản lý</a> @endif
+                        <a href="{{ route('admin.i>ndex') }}" class="dropdown-item">Admin page</a> @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -57,17 +58,15 @@
                         </form>
                     </div>
                 </li>
-
                 @endguest
             </ul>
         </div>
     </div>
 </div>
 
-
+@section('script')
 <script>
-    $(function () {
-        $('#searchInput').on('keyup', function () {
+    $('#searchInput').on('keyup', function () {
             var input = $(this).val();
             var html = '';
             if (input.length == 0) {
@@ -109,15 +108,5 @@
             }
         });
     });
-
-    $('.notifyDropDown').on('click', function () {
-        $.ajax({
-            method: 'post',
-            url: '/marknotification',
-            success: function (data) {
-                console.log(data);
-            }
-        })
-    })
-
 </script>
+@endsection

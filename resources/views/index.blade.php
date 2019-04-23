@@ -1,10 +1,10 @@
-@extends('layouts.master') 
+@extends('layouts.master')
 @section('style')
     <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 @endsection
 
-@section('content') 
-    @foreach($categories as $category)
+@section('content')
+    @foreach($allCategories as $category)
         <div class="card-deck-wraper">
             <h3 style="background-image: url('{{ URL::to('/') }}/{{ $category->image_url }}')">{{ $category->name }}</h1>
                 <div class="card-deck">
@@ -36,7 +36,7 @@
                         </div>
                     @endforeach
                 </div>
-                <a class="float-right category-show" href="{{ route('category.show',['id' => $category->slug]) }}">Xem toàn bộ
+                <a class="float-right category-show" href="{{ route('category.show',['id' => $category->slug]) }}">View all
                     <i class="fas fa-angle-right"></i>
                 </a>
         </div>
@@ -45,6 +45,4 @@
 
 @section('script')
     <script src="{{ asset('js/index.js') }}"></script>
-    
-    <!-- <script src="{{ asset('js/addlove.js') }}"></script> -->
 @endsection
