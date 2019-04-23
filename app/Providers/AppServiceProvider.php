@@ -15,20 +15,17 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     public function boot()
     {
         Schema::defaultStringLength(191);
-        Form::component('bsText', 'components.form.text', ['name', 'value', 'attributes'=>[]]);
-        Form::component('bsTextArea', 'components.form.textarea', ['name', 'value', 'attributes'=>[]]);
-        Form::component('bsNumber', 'components.form.number', ['name', 'value', 'attributes'=>[]]);
-        Form::component('bsSelect', 'components.form.select', ['name', 'value', 'selected','attributes'=>[]]);
-        Form::component('bsSubmit', 'components.form.submit', ['value', 'attributes'=>[]]);
-        Form::component('bsFile', 'components.form.file', ['name', 'attributes'=>[]]);
+        Form::component('bsText', 'components.form.text', ['name', 'value', 'attributes' => []]);
+        Form::component('bsTextArea', 'components.form.textarea', ['name', 'value', 'attributes' => []]);
+        Form::component('bsNumber', 'components.form.number', ['name', 'value', 'attributes' => []]);
+        Form::component('bsSelect', 'components.form.select', ['name', 'value', 'selected', 'attributes' => []]);
+        Form::component('bsSubmit', 'components.form.submit', ['value', 'attributes' => []]);
+        Form::component('bsFile', 'components.form.file', ['name', 'attributes' => []]);
         if (!app()->runningInConsole()) {
-            // App is not running in CLI context
-            // Do HTTP-specific stuff here
-            View::share('categories', Category::get());
+            View::share('allCategories', Category::get());
         }
     }
 

@@ -11,3 +11,6 @@ npm-debug.log
 yarn-error.log
 /public/hot
 /public/storage
+/public/images/product
+/public/products/
+.php_cs.cache

@@ -22,7 +22,11 @@ class UserController extends Controller
     {
         $user = User::where('username', $slug)->first();
         $products = Product::where('user_id', $user->id)->paginate(10);
-        $lovedProducts = Product::select('*', 'products.id')->join('love', 'products.id', '=', 'love.product_id')->where('love.user_id', $user->id)->where('love.loved', 1)->paginate(10);
+        $lovedProducts = Product::select('*', 'products.id')
+            ->join('love', 'products.id', '=', 'love.product_id')
+            ->where('love.user_id', $user->id)
+            ->where('love.loved', 1)
+            ->paginate(10);
 
         return view('users.show', compact(['user', 'products', 'lovedProducts']));
     }
@@ -53,7 +57,8 @@ class UserController extends Controller
         if (Auth::user()->id == $request->id) {
             return response()->json(['error' => 'You cant delete your own account'], 403);
         }
-        $user = User::findOrFail($request->id)->delete();
+
+        User::findOrFail($request->id)->delete();
     }
 
     public function adminCreate()
